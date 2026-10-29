@@ -1,0 +1,232 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RouteIQ | Logistics Optimization</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i data-lucide="route"></i></div>
+            <div><h2>RouteIQ</h2><span>DELIVERY OPERATIONS</span></div>
+        </div>
+
+        <div class="nav-label">WORKSPACE</div>
+        <button class="nav-item active" data-page="overview"><i data-lucide="layout-dashboard"></i> Overview</button>
+        <button class="nav-item" data-page="optimizer"><i data-lucide="git-branch"></i> Route Optimizer</button>
+        <button class="nav-item" data-page="performance"><i data-lucide="chart-no-axes-combined"></i> Performance Lab</button>
+
+        <div class="sidebar-bottom">
+            <div class="status-dot"></div>
+            <div><strong>Optimization Engine</strong><p>Local C++ engine · Ready</p></div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div><span class="eyebrow">LOGISTICS / OVERVIEW</span><h1>Delivery Overview</h1></div>
+            <div class="top-actions">
+                <span class="live"><span></span> SYSTEM ONLINE</span>
+                <div class="avatar">S</div>
+            </div>
+        </header>
+
+        <section class="welcome">
+            <div>
+                <span class="eyebrow">DELIVERY PLANNING</span>
+                <h2>Plan routes. <span>Deliver reliably.</span></h2>
+                <p>Plan delivery stops, review route distance and open driving directions.</p>
+                <button class="primary-btn" id="optimizeBtn"><i data-lucide="zap"></i> Optimize Routes <span>→</span></button>
+            </div>
+            <div class="hero-art">
+                <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+                <div class="hero-center"><i data-lucide="navigation"></i></div>
+                <div class="node node-a">A</div><div class="node node-b">B</div>
+                <div class="node node-c">C</div><div class="node node-d">D</div>
+            </div>
+        </section>
+
+        <div class="section-heading"><div><span class="eyebrow">AT A GLANCE</span><h2>Network overview</h2></div><span class="muted">Sample routing dataset</span></div>
+
+        <section class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total route distance</span><i data-lucide="route"></i></div><div class="stat-value" id="distanceValue">232.01 <small>distance units</small></div><div class="stat-foot"><span class="positive">↘ Optimized distance</span></div></article>
+            <article class="stat-card"><div class="stat-top"><span>Vehicles deployed</span><i data-lucide="truck"></i></div><div class="stat-value" id="vehicleValue">02 <small>vehicles</small></div><div class="stat-foot">Capacity-aware routing</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Delivery locations</span><i data-lucide="map-pin"></i></div><div class="stat-value" id="locationValue">04 <small>stops</small></div><div class="stat-foot">Across the delivery network</div></article>
+            <article class="stat-card"><div class="stat-top"><span>Capacity utilization</span><i data-lucide="gauge"></i></div><div class="stat-value" id="utilValue">76.7<small>%</small></div><div class="stat-foot"><span class="positive">23 / 30 total capacity</span></div></article>
+        </section>
+
+        <section class="content-grid">
+            <article class="panel network-panel">
+                <div class="panel-header"><div><span class="eyebrow">ROUTE PREVIEW</span><h2>Route sequence preview</h2></div><span class="tag"><span></span> 2 planned routes</span></div>
+                <div class="route-preview">
+                    <div class="preview-row"><span class="preview-marker depot-marker">D</span><div><strong>Start / end location</strong><p>Depot — the route begins and returns here.</p></div></div>
+                    <div class="preview-row"><span class="preview-marker route-a-marker">A</span><div><strong>Route A</strong><p>Depot → Customer 1 → Customer 2 → Depot</p></div></div>
+                    <div class="preview-row"><span class="preview-marker route-b-marker">B</span><div><strong>Route B</strong><p>Depot → Customer 3 → Customer 4 → Depot</p></div></div>
+                    <p class="map-note">This is a route-sequence preview. Use Route Optimizer to enter real-world addresses and view them on Google Maps.</p>
+                </div>
+            </article>
+
+            <article class="panel route-panel">
+                <div class="panel-header"><div><span class="eyebrow">ROUTE BREAKDOWN</span><h2>Planned delivery routes</h2></div><i data-lucide="arrow-up-right"></i></div>
+                <div class="route-card"><div class="route-title"><span class="route-icon purple">A</span><div><strong>Vehicle 01</strong><p>Depot → Stop 1 → Stop 2 → Depot</p></div></div><div class="route-metrics"><span>Load <b>13 / 15</b></span><span>Utilization <b>86.7%</b></span></div><div class="progress"><span style="width:86.7%"></span></div></div>
+                <div class="route-card"><div class="route-title"><span class="route-icon blue">B</span><div><strong>Vehicle 02</strong><p>Depot → Stop 3 → Stop 4 → Depot</p></div></div><div class="route-metrics"><span>Load <b>10 / 15</b></span><span>Utilization <b>66.7%</b></span></div><div class="progress blue-progress"><span style="width:66.7%"></span></div></div>
+                <div class="insight"><i data-lucide="lightbulb"></i><div><strong>Route summary</strong><p>Customer demands fit within both vehicle capacity limits.</p></div></div>
+            </article>
+        </section>
+
+        <footer><span>RouteIQ <span class="footer-dot">●</span> Vehicle Routing Problem</span><span>Clarke–Wright Savings · DAA Project</span></footer>
+            <section id="optimizerPage" style="display:none">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">DELIVERY PLANNING</span>
+                    <h2>Route Optimizer</h2>
+                </div>
+                <span class="muted">Clarke–Wright route planning</span>
+            </div>
+
+            <div class="content-grid">
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <span class="eyebrow">PROBLEM CONFIGURATION</span>
+                            <h2>Start location & vehicle</h2>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <label>Depot X
+                            <input id="depotX" type="number" value="50" step="any">
+                        </label>
+                        <label>Depot Y coordinate
+                            <input id="depotY" type="number" value="50" step="any">
+                        </label>
+                        <label class="full-field">Start / end address or place
+                            <input id="depotAddress" type="text" placeholder="Enter depot address or Google Maps place name">
+                        </label>
+                        <label class="full-field">Vehicle capacity
+                            <input id="vehicleCapacity" type="number" min="1" value="15">
+                        </label>
+                    </div>
+
+                    <div class="panel-header customer-heading">
+                        <div>
+                            <span class="eyebrow">DELIVERY NETWORK</span>
+                            <h2>Delivery stops</h2>
+                        </div>
+                        <span class="tag" id="customerCountTag">4 customers</span>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="customer-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>X</th>
+                                    <th>Y</th>
+                                    <th>Demand</th>
+                                    <th>Address / place</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerTableBody"></tbody>
+                        </table>
+                    </div>
+
+                    <button class="secondary-btn" id="addCustomerBtn" type="button">
+                        + Add customer
+                    </button>
+
+                    <div class="optimizer-actions">
+                        <button class="primary-btn" id="runCustomOptimization" type="button">
+                            Optimize this network →
+                        </button>
+                        <button class="secondary-btn" id="resetCustomersBtn" type="button">
+                            Reset sample
+                        </button>
+                    </div>
+
+                    <p class="form-note" id="optimizerStatus">
+                        Edit coordinates and demand, then optimize your network.
+                    </p>
+                </article>
+
+                <article class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <span class="eyebrow">LIVE SUMMARY</span>
+                            <h2>Delivery plan details</h2>
+                        </div>
+                    </div>
+
+                    <div class="summary-stat">
+                        <span>Delivery stops</span>
+                        <strong id="summaryCustomers">4</strong>
+                    </div>
+                    <div class="summary-stat">
+                        <span>Total delivery demand</span>
+                        <strong id="summaryDemand">23</strong>
+                    </div>
+                    <div class="summary-stat">
+                        <span>Vehicle capacity</span>
+                        <strong id="summaryCapacity">15</strong>
+                    </div>
+                    <div class="summary-stat">
+                        <span>Minimum vehicles by capacity</span>
+                        <strong id="summaryVehicles">2</strong>
+                    </div>
+
+                    <div class="insight">
+                        <i data-lucide="lightbulb"></i>
+                        <div>
+                            <strong>How it works</strong>
+                            <p>The Clarke–Wright Savings heuristic starts with individual customer routes and merges feasible routes to reduce travel distance while respecting capacity.</p>
+                        </div>
+                    </div>
+
+                    <div class="driver-details">
+                        <div class="panel-header driver-heading">
+                            <div><span class="eyebrow">ASSIGNMENT DETAILS</span><h2>Delivery person</h2></div>
+                        </div>
+                        <div class="form-grid driver-grid">
+                            <label>Driver name
+                                <input id="driverName" type="text" placeholder="Enter delivery person's name">
+                            </label>
+                            <label>Phone number
+                                <input id="driverPhone" type="tel" placeholder="e.g. 98765 43210">
+                            </label>
+                            <label class="full-field">Vehicle registration number
+                                <input id="driverVehicle" type="text" placeholder="e.g. MH12 AB 1234">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="panel-header map-heading">
+                        <div><span class="eyebrow">GOOGLE MAPS</span><h2>Location map</h2></div>
+                        <a class="secondary-btn map-open-link" id="openGoogleMaps" href="https://maps.google.com/" target="_blank" rel="noopener noreferrer">Open Google Maps ↗</a>
+                    </div>
+                    <div class="google-map-frame">
+                        <iframe id="googleMapFrame" title="Google Maps location preview" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Pune%2C%20India&output=embed"></iframe>
+                    </div>
+                    <p class="form-note">Enter real addresses or place names above to preview a location. The current X/Y coordinates are algorithm coordinates, not GPS coordinates.</p>
+                    <div id="customResults" style="display:none">
+                        <div class="panel-header results-heading">
+                            <div>
+                                <span class="eyebrow">COMPUTED SOLUTION</span>
+                                <h2>Route plan &amp; directions</h2>
+                            </div>
+                        </div>
+                        <div id="customResultsBody"></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
